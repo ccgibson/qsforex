@@ -147,7 +147,9 @@ class Portfolio(object):
             
             # If there is no position, create one
             if currency_pair not in self.positions:
+                print("not in positions")
                 if side == "buy":
+                    print("buy handler")
                     position_type = "long"
                 else:
                     position_type = "short"
@@ -185,6 +187,7 @@ class Portfolio(object):
                     add_position_units(currency_pair, units)
 
             order = OrderEvent(currency_pair, units, "market", side)
+            print("putting order in")
             self.events.put(order)
 
             self.logger.info("Portfolio Balance: %s" % self.balance)
