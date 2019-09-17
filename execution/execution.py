@@ -56,7 +56,7 @@ class OANDAExecutionHandler(ExecutionHandler):
     def execute_order(self, event):
         instrument = "%s_%s" % (event.instrument[:3], event.instrument[3:])
         headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
+            "Content-Type": "application/json",
             "Authorization": "Bearer " + self.access_token
         }
         params = urlencode({
