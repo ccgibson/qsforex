@@ -43,13 +43,11 @@ class StreamingForexPrices(PriceHandler):
         pairs_oanda = ["%s_%s" % (p[:3], p[3:]) for p in self.pairs]
         pair_list = ",".join(pairs_oanda)
         try:
-            print("attempting to stream")
             requests.packages.urllib3.disable_warnings()
             s = requests.Session()
- #           url = "https://" + self.domain + "/v1/prices"
-            url = "https://" + self.domain + "/v3/accounts/" + self.account_id + "/pricing/stream"
+            url = "https://" + self.domain + "/v1/prices"
             headers = {'Authorization' : 'Bearer ' + self.access_token}
-            params = {'instruments' : pair_list}
+            params = {'instruments' : pair_list, 'accountId' : self.account_id}
             req = requests.Request('GET', url, headers=headers, params=params)
             pre = req.prepare()
             resp = s.send(pre, stream=True, verify=False)
@@ -75,12 +73,12 @@ class StreamingForexPrices(PriceHandler):
                 if "instrument" in msg or "tick" in msg:
                     self.logger.debug(msg)
                     getcontext().rounding = ROUND_HALF_DOWN 
-                    instrument = msg["instrument"].replace("_", "")
-                    time = msg["time"]
-                    bid = Decimal(str(msg["bids"][0]["price"])).quantize(
+                    instrument = msg["tick"]["instrument"].replace("_", "")
+                    time = msg["tick"]["time"]
+                    bid = Decimal(str(msg["tick"]["bid"])).quantize(
                         Decimal("0.00001")
                     )
-                    ask = Decimal(str(msg["asks"][0]["price"])).quantize(
+                    ask = Decimal(str(msg["tick"]["ask"])).quantize(
                         Decimal("0.00001")
                     )
                     self.prices[instrument]["bid"] = bid
