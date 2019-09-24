@@ -15,8 +15,8 @@ ENVIRONMENTS = {
     }
 }
 
-CSV_DATA_DIR = ".\output"
-OUTPUT_RESULTS_DIR = ".\output"
+CSV_DATA_DIR = r"C:\Users\ccgib\OneDrive\Documents2\GitHub\qsforex\test_data"
+OUTPUT_RESULTS_DIR = r".\output"
 
 DOMAIN = "practice"
 STREAM_DOMAIN = ENVIRONMENTS["streaming"][DOMAIN]
