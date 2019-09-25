@@ -47,6 +47,9 @@ class Position(object):
             qh_close = ticker_qh["bid"]
         else:
             qh_close = ticker_qh["ask"]
+#        print("pips: " + str(pips))
+#        print("qh_close:" + str(qh_close))
+#        print("self.units" + str(self.units))
         profit = pips * qh_close * self.units
         return profit.quantize(
             Decimal("0.00001"), ROUND_HALF_DOWN

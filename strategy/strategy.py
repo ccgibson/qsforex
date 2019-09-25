@@ -95,10 +95,12 @@ class MovingAverageCrossStrategy(object):
             if pd["ticks"] > self.short_window:
                 if pd["short_sma"] > pd["long_sma"] and not pd["invested"]:
                     signal = SignalEvent(pair, "market", "buy", event.time)
+                    print("signal to buy")
                     self.events.put(signal)
                     pd["invested"] = True
                 if pd["short_sma"] < pd["long_sma"] and pd["invested"]:
                     signal = SignalEvent(pair, "market", "sell", event.time)
+                    print("signal to sell")
                     self.events.put(signal)
                     pd["invested"] = False
             pd["ticks"] += 1

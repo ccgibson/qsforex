@@ -18,7 +18,7 @@ class Backtest(object):
         self, pairs, data_handler, strategy, 
         strategy_params, portfolio, execution, 
         equity=100000.0, heartbeat=0.0, 
-        max_iters=1000
+        max_iters=100000
     ):
         """
         Initialises the backtest.
@@ -49,6 +49,7 @@ class Backtest(object):
         exceeded.
         """
         print("Running Backtest...")
+        breakpoint()
         iters = 0
         while iters < self.max_iters and self.ticker.continue_backtest:
             try:
