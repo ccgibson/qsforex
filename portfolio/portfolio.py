@@ -136,6 +136,7 @@ class Portfolio(object):
         for pair in tp:
             if tp[pair]["ask"] is None or tp[pair]["bid"] is None:
                 execute = False
+                print("unable to execute as ask or bid was None")
 
         # All necessary pricing data is available,
         # we can execute
@@ -147,25 +148,28 @@ class Portfolio(object):
             
             # If there is no position, create one
             if currency_pair not in self.positions:
-                print("not in positions")
                 if side == "buy":
-                    print("buy handler")
+                    print("Not in positions; long handler")
                     position_type = "long"
                 else:
+                    print("Not in positions; short handler")
                     position_type = "short"
                 self.add_new_position(
                     position_type, currency_pair, 
                     units, self.ticker
                 )
+                print("adding units: " + str(units) + " at price: " + str(self.ticker.prices))
 
             # If a position exists add or remove units
             else:
                 ps = self.positions[currency_pair]
 
                 if side == "buy" and ps.position_type == "long":
+                    print("Have positions; buy/long")
                     add_position_units(currency_pair, units)
 
                 elif side == "sell" and ps.position_type == "long":
+                    print("Have positions; sell/long")
                     if units == ps.units:
                         self.close_position(currency_pair)
                     # TODO: Allow units to be added/removed
@@ -175,6 +179,7 @@ class Portfolio(object):
                         return
 
                 elif side == "buy" and ps.position_type == "short":
+                    print("have positions; buy/short")
                     if units == ps.units:
                         self.close_position(currency_pair)
                     # TODO: Allow units to be added/removed
@@ -184,12 +189,13 @@ class Portfolio(object):
                         return
                         
                 elif side == "sell" and ps.position_type == "short":
+                    print("have positions; sell/short")
                     add_position_units(currency_pair, units)
 
             order = OrderEvent(currency_pair, units, "market", side)
             print("putting order in")
             self.events.put(order)
-
+            print("Portfolio Balance: %s" % self.balance)
             self.logger.info("Portfolio Balance: %s" % self.balance)
         else:
             self.logger.info("Unable to execute order as price data was insufficient.")
