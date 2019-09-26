@@ -18,7 +18,7 @@ class Backtest(object):
         self, pairs, data_handler, strategy, 
         strategy_params, portfolio, execution, 
         equity=100000.0, heartbeat=0.0, 
-        max_iters=10000000
+        max_iters=1000000000
     ):
         """
         Initialises the backtest.
