@@ -158,7 +158,9 @@ class Portfolio(object):
                     position_type, currency_pair, 
                     units, self.ticker
                 )
-                print("adding units: " + str(units) + " at price: " + str(self.ticker.prices))
+#                print("adding units: " + str(units) + " at price: " + str(self.ticker.prices))
+#  INSERT balance updating code here. (add_new_position *and* add_new_position_units)
+#  TEST by showing how much "equity" exits in positions
 
             # If a position exists add or remove units
             else:

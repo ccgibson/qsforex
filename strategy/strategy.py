@@ -75,7 +75,6 @@ class MovingAverageCrossStrategy(object):
         return ((sma_m_1 * (window - 1)) + price) / window
 
     def calculate_signals(self, event):
-        breakpoint()
         if event.type == 'TICK':
             pair = event.instrument
             price = event.bid

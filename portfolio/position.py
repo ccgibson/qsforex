@@ -38,6 +38,7 @@ class Position(object):
         pips = (mult * (self.cur_price - self.avg_price)).quantize(
             Decimal("0.00001"), ROUND_HALF_DOWN
         )
+#        print("pips: " + str(self.cur_price) + " - " + str(self.avg_price) + " pips: " + str(pips))
         return pips
 
     def calculate_profit_base(self):
